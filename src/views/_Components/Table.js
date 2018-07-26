@@ -8,35 +8,84 @@ import {
     ButtonGroup,
     Button,
 }  from 'reactstrap';
-
+import axios from 'axios';
+import urls from '../../utils';
 
 export default class Table extends Component {
-
+    toast = this.props.toast;
     constructor(props) {
         super(props)
-        
         this._columns = [
             {
+              key: 'date',
+              name: 'Date'
+            },
+            {
+              key: 'ref',
+              name: 'N.Ref'
+            },
+            {
+              key: 'naut',
+              name: 'N.Auth'
+            },
+            {
               key: 'id',
-              name: 'ID'
+              name: 'ID commercant'
             },
             {
-              key: 'title',
-              name: 'Title'
+              key: 'pan',
+              name: 'PAN'
             },
             {
-              key: 'count',
-              name: 'Count'
+              key: 'tt',
+              name: 'T.T'
+            },
+            {
+              key: 'montant',
+              name: 'Montant'
+            },
+            {
+              key: 'mon',
+              name: 'Mon.'
+            },
+            {
+              key: 'rep',
+              name: 'Repo'
+            },
+            {
+              key: 'status',
+              name: 'Stauts'
+            },
+            {
+              key: 'stat',
+              name: 'Stat Aut'
             }
         ];
         let rows = [];
         for (let i = 1; i < 14; i++) {
             rows.push({
-                id: i,
-                title: 'Title ' + i,
-                count: i * 1000
+                date: i,
+                ref: 'example ' + i,
+                aut: i * 1000,
+                id: 'example ' + i,
+                pan:'example ' + i,
+                tt :'example ' + i,
+                montant:'$' + i*1000,
+                rep:'example ' + i,
+                mon:'example ' + i,
+                status: 'example ' + i,
+                stat:'example ' + i,
             });
         }
+        var self = this
+        axios.get(urls.api + 'something')
+        .then(function (data) {
+            data = JSON.parse(data)
+            console.log(data);
+        })
+        .catch(function(error){
+            self.props.toast('error connecting to the server !', 'error')
+        })
         this.state = { 
             rows,
             selectedIndexes: [],
